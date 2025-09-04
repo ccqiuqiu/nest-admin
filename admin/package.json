@@ -3,28 +3,7 @@
   "version": "2.0.0",
   "private": true,
   "keywords": [
-    "monorepo",
-    "turbo",
-    "vben",
-    "vben admin",
-    "vben pro",
-    "vue",
-    "vue admin",
-    "vue vben admin",
-    "vue vben admin pro",
-    "vue3",
-    "ruoyi ai",
-    "ai"
   ],
-  "homepage": "https://github.com/vbenjs/vue-vben-admin",
-  "bugs": "https://github.com/vbenjs/vue-vben-admin/issues",
-  "repository": "vbenjs/vue-vben-admin.git",
-  "license": "MIT",
-  "author": {
-    "name": "vben",
-    "email": "ann.vben@gmail.com",
-    "url": "https://github.com/anncwb"
-  },
   "type": "module",
   "scripts": {
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 turbo build",
@@ -42,7 +21,8 @@
     "check:type": "turbo run typecheck",
     "clean": "node ./scripts/clean.mjs",
     "commit": "czg",
-    "dev": "turbo-run dev",
+    "dev": "npm run dev:antd",
+    "dev2": "turbo-run dev",
     "dev:antd": "pnpm -F @vben/web-antd run dev",
     "dev:docs": "pnpm -F @vben/docs run dev",
     "dev:play": "pnpm -F @vben/playground run dev",

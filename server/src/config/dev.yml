@@ -30,10 +30,10 @@ cos:
 db:
   type: mysql
   host: localhost
-  username: admin
-  password: admin
-  database: nest
-  port: 5432
+  username: root
+  password: '123456'
+  database: nest-admin
+  port: 3306
   logger: file
   logging: true
   multipleStatements: true
@@ -47,7 +47,7 @@ redis:
   # Redis模式：host-连接远程Redis服务器，memory-使用内存模拟Redis
   mode: host
   host: localhost
-  password: '*********'
+  password: 
   port: 6379
   db: 2
   keyPrefix: ''

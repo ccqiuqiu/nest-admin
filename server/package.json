@@ -11,6 +11,7 @@
     "build:ncc:watch": "ncc build src/main.ts -o dist_ncc --external pg-cloudflare --watch",
     "build:sea": "node scripts/create-sea.js",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "dev": "npm run start:dev",
     "start": "nest start",
     "start:dev": "cross-env NODE_ENV=development nest start --watch",
     "start:test": "cross-env NODE_ENV=test nest start --watch",

@@ -8,7 +8,6 @@ import { ServeStaticModule } from '@nestjs/serve-static'
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm'
 import { JwtAuthGuard } from 'src/common/guards/auth.guard'
 import { PermissionGuard } from 'src/common/guards/permission.guard'
-import { LicenseModule } from 'src/common/license/license.module'
 import { RolesGuard } from './common/guards/roles.guard'
 import configuration from './config/index'
 import { CommonModule } from './module/common/common.module'
@@ -48,7 +47,6 @@ import { UploadModule } from './module/upload/upload.module'
     }),
 
     CommonModule,
-    LicenseModule,
     MainModule,
     UploadModule,
 

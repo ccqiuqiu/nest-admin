@@ -10,29 +10,8 @@ import helmet from 'helmet'
 import { mw as requestIpMw } from 'request-ip'
 import { AppModule } from 'src/app.module'
 import { HttpExceptionsFilter } from 'src/common/filters/http-exceptions-filter'
-import { LicenseService } from 'src/common/license/license.service'
 
 async function bootstrap() {
-  // 创建临时应用实例用于许可证验证
-  const tempApp = await NestFactory.createApplicationContext(AppModule)
-  const licenseService = tempApp.get(LicenseService)
-
-  // 验证许可证
-  const isLicenseValid = await licenseService.validateLicense()
-  if (!isLicenseValid) {
-    console.error('❌ 许可证验证失败，服务无法启动')
-    console.error('请确保在项目根目录下存在有效的 license 文件')
-    console.error('可以使用以下命令生成许可证：')
-    console.error('node scripts/generate-license.js generate "your-client-id" "2025-12-31" "basic"')
-    await tempApp.close()
-    process.exit(1)
-  }
-
-  // 关闭临时应用实例
-  await tempApp.close()
-
-  console.log('✅ 许可证验证通过，正在启动服务...')
-
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     cors: true, // 开启跨域访问
   })
@@ -106,10 +85,6 @@ async function bootstrap() {
   const port = config.get<number>('app.port') || 8080
   await app.listen(port, '0.0.0.0')
 
-  // 显示许可证信息
-  const finalLicenseService = app.get(LicenseService)
-  const licenseInfo = await finalLicenseService.getLicenseInfo()
-
   console.log(
     `YunXi-Vue 服务启动成功`,
     '\n',
@@ -119,29 +94,5 @@ async function bootstrap() {
     'swagger 文档地址',
     `http://localhost:${port}${prefix}/swagger-ui/`,
   )
-
-  if (licenseInfo) {
-    console.log('\n📋 许可证信息:')
-    console.log(`👤 客户端ID: ${licenseInfo.clientId}`)
-    console.log(`📅 过期日期: ${licenseInfo.expiryDate}`)
-    console.log(`🔧 授权功能: ${licenseInfo.features.join(', ')}`)
-
-    // 计算剩余天数
-    const expiryDate = new Date(licenseInfo.expiryDate)
-    const currentDate = new Date()
-    const remainingDays = Math.ceil(
-      (expiryDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24),
-    )
-
-    if (remainingDays > 30) {
-      console.log(`⏰ 剩余有效期: ${remainingDays} 天`)
-    }
-    else if (remainingDays > 7) {
-      console.log(`⚠️  剩余有效期: ${remainingDays} 天 (即将过期)`)
-    }
-    else {
-      console.log(`🚨 剩余有效期: ${remainingDays} 天 (请及时续期)`)
-    }
-  }
 }
 bootstrap()
