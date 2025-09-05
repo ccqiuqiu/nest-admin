@@ -45,10 +45,7 @@ export function confirmDeleteModal(props: ConfirmModalProps) {
         <Alert message={'确认删除后将无法恢复，请谨慎操作！'} type="error" />
         <Form layout="vertical" model={formValue}>
           <Form.Item {...validateInfos.content}>
-            <Input
-              placeholder={placeholder}
-              v-model:value={formValue.content}
-            />
+            <Input placeholder={placeholder} v-model:value={formValue.content} />
           </Form.Item>
         </Form>
       </div>

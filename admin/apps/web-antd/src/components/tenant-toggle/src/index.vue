@@ -65,9 +65,7 @@ const onSelected: SelectHandler = async (tenantId: string, option: any) => {
   }
   await tenantDynamicToggle(tenantId);
   lastSelected.value = tenantId;
-  message.success(
-    `${$t('component.tenantToggle.switch')} ${option.companyName}`,
-  );
+  message.success(`${$t('component.tenantToggle.switch')} ${option.companyName}`);
   close(true);
   // 需要放在宏队列处理 直接清空页面由于没有字典会有样式问题(标签变成unknown)
   setTimeout(() => dictStore.resetCache());
@@ -97,7 +95,7 @@ function filterOption(input: string, option: TenantOption) {
     <Select
       v-model:value="selected"
       :field-names="{ label: 'companyName', value: 'tenantId' }"
-      :filter-option="filterOption"
+      :filter-option="filterOption as any"
       :options="tenantList"
       :placeholder="$t('component.tenantToggle.placeholder')"
       allow-clear

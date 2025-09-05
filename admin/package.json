@@ -2,8 +2,7 @@
   "name": "ruoyi-ai-admin",
   "version": "2.0.0",
   "private": true,
-  "keywords": [
-  ],
+  "keywords": [],
   "type": "module",
   "scripts": {
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 turbo build",
@@ -40,9 +39,21 @@
     "version": "pnpm exec changeset version && pnpm install --no-frozen-lockfile",
     "generate": "node ./scripts/generate/main.mjs"
   },
+  "dependencies": {
+    "archiver": "^7.0.1",
+    "art-template": "^4.13.4",
+    "axios": "^1.10.0",
+    "heatmap.js": "^2.0.5",
+    "leaflet": "^1.9.4",
+    "leaflet-heatmap": "^1.0.0",
+    "leaflet-velocity": "^2.1.4",
+    "leaflet.heat": "^0.2.0",
+    "yargs": "^18.0.0"
+  },
   "devDependencies": {
     "@changesets/changelog-github": "catalog:",
     "@changesets/cli": "catalog:",
+    "@iconify/json": "^2.2.381",
     "@playwright/test": "catalog:",
     "@types/node": "catalog:",
     "@vben/commitlint-config": "workspace:*",
@@ -70,6 +81,8 @@
     "turbo": "catalog:",
     "typescript": "catalog:",
     "unbuild": "catalog:",
+    "unplugin-auto-import": "^20.1.0",
+    "unplugin-icons": "^22.2.0",
     "vite": "catalog:",
     "vitest": "catalog:",
     "vue": "catalog:",
@@ -97,12 +110,9 @@
     "neverBuiltDependencies": [
       "canvas",
       "node-gyp"
-    ]
-  },
-  "dependencies": {
-    "archiver": "^7.0.1",
-    "art-template": "^4.13.4",
-    "axios": "^1.10.0",
-    "yargs": "^18.0.0"
+    ],
+    "patchedDependencies": {
+      "heatmap.js@2.0.5": "patches/heatmap.js@2.0.5.patch"
+    }
   }
 }

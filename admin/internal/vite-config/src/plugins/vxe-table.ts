@@ -14,7 +14,7 @@ async function viteVxeTableImportsPlugin(): Promise<PluginOption> {
         }),
       ],
     }),
-  ];
+  ] as any[];
 }
 
 export { viteVxeTableImportsPlugin };

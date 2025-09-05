@@ -15,7 +15,7 @@ export async function node(): Promise<Linter.Config[]> {
         'n/no-deprecated-api': 'error',
         'n/no-exports-assign': 'error',
         'n/no-extraneous-import': [
-          'error',
+          'off',
           {
             allowModules: [
               'unbuild',

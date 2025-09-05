@@ -8,11 +8,7 @@ import { useDictStore } from '#/store/dict';
  * @param formatNumber 是否格式化字典value为number类型
  * @returns 数据
  */
-function fetchAndCacheDictData<T>(
-  dictName: string,
-  dataGetter: () => T[],
-  formatNumber = false,
-): T[] {
+function fetchAndCacheDictData<T>(dictName: string, dataGetter: () => T[], formatNumber = false): T[] {
   const { dictRequestCache, setDictInfo } = useDictStore();
   // 有调用方决定如何获取数据
   const dataList = dataGetter();
@@ -62,9 +58,5 @@ export function getDict(dictName: string) {
  */
 export function getDictOptions(dictName: string, formatNumber = false) {
   const { getDictOptions } = useDictStore();
-  return fetchAndCacheDictData(
-    dictName,
-    () => getDictOptions(dictName),
-    formatNumber,
-  );
+  return fetchAndCacheDictData(dictName, () => getDictOptions(dictName), formatNumber);
 }

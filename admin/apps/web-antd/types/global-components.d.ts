@@ -7,3 +7,5 @@ declare module 'vue' {
     GhostButton: typeof import('#/components/global/button')['GhostButton']
   }
 }
+
+declare module '*.json' {}

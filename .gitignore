@@ -6,3 +6,5 @@
 /docs/.vitepress/cache
 /docs/node_modules
 /docs/dist
+components.d.ts
+auto-imports.d.ts

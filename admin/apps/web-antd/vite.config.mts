@@ -1,26 +1,40 @@
 import { defineConfig } from '@vben/vite-config';
 
-// 自行取消注释来启用按需导入功能
-// import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
-// import Components from 'unplugin-vue-components/vite';
+import AutoImport from 'unplugin-auto-import/vite';
+import IconsResolver from 'unplugin-icons/resolver';
+import Icons from 'unplugin-icons/vite';
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
+import Components from 'unplugin-vue-components/vite';
 
 export default defineConfig(async () => {
   return {
     application: {},
     vite: {
       plugins: [
-        // Components({
-        //   dirs: [], // 默认会导入src/components目录下所有组件 不需要
-        //   dts: './types/components.d.ts', // 输出类型文件
-        //   resolvers: [
-        //     AntDesignVueResolver({
-        //       // 需要排除Button组件 全局已经默认导入了
-        //       exclude: ['Button'],
-        //       importStyle: false, // css in js
-        //     }),
-        //   ],
-        // }),
-      ],
+        AutoImport({
+          dts: './types/auto-imports.d.ts', // 生成类型声明文件
+          imports: ['vue', 'vue-router', 'pinia'],
+          vueTemplate: true, // 支持在模板中直接使用 API
+        }),
+        Icons({
+          autoInstall: true,
+          compiler: 'vue3',
+          defaultClass: 'inline-block',
+          scale: 1,
+        }),
+        Components({
+          dirs: ['node_modules/@vben/common-ui/src/components/page'],
+          dts: './types/components.d.ts', // 输出类型文件
+          resolvers: [
+            AntDesignVueResolver({
+              importStyle: false, // css in js
+            }),
+            IconsResolver({
+              prefix: 'icon', // <IconMaterialSymbols3dRounded/>
+            }),
+          ],
+        }),
+      ] as any[],
       server: {
         proxy: {
           '/api': {
@@ -41,4 +55,4 @@ export default defineConfig(async () => {
       },
     },
   };
-});
+}) as any;

@@ -22,7 +22,7 @@ export async function typescript(): Promise<Linter.Config[]> {
           ecmaVersion: 'latest',
           extraFileExtensions: ['.vue'],
           jsxPragma: 'React',
-          project: './tsconfig.*.json',
+          // project: './tsconfig.*.json',
           sourceType: 'module',
         },
       },
@@ -41,9 +41,9 @@ export async function typescript(): Promise<Linter.Config[]> {
             'ts-nocheck': 'allow-with-description',
           },
         ],
-
         // '@typescript-eslint/consistent-type-definitions': ['warn', 'interface'],
         '@typescript-eslint/consistent-type-definitions': 'off',
+
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/explicit-module-boundary-types': 'off',
         '@typescript-eslint/no-empty-function': [

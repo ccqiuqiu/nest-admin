@@ -232,7 +232,6 @@ export async function javascript(): Promise<Linter.Config[]> {
           { enforceForIndexOf: true, enforceForSwitchCase: true },
         ],
         'valid-typeof': ['error', { requireStringLiterals: true }],
-
         'vars-on-top': 'error',
         yoda: ['error', 'never'],
       },

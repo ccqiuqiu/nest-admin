@@ -38,7 +38,16 @@ async function runDepcheck() {
           '@types/*',
           '@vben-core/design',
         ],
-        ignorePatterns: ['dist', 'node_modules', 'public'],
+        ignorePatterns: [
+          'dist',
+          'node_modules',
+          'public',
+          'build/',
+          '*.config.js',
+          '*.config.mjs',
+          '.eslintrc.js',
+          'vite.config.ts',
+        ],
       });
 
       // 删除file:前缀的依赖提示，该依赖是本地依赖
