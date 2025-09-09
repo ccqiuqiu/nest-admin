@@ -224,9 +224,7 @@ export const drawerSchema: FormSchemaGetter = () => [
     component: 'Input',
     componentProps: (model) => {
       const placeholder =
-        model.isFrame === '0'
-          ? '填写链接地址http(s)://  使用新页面打开'
-          : '填写`路由地址`或者`链接地址`  链接默认使用内部iframe内嵌打开';
+        model.isFrame === '0' ? '填写链接地址http(s)://  使用新页面打开' : '填写`路由地址`或者`链接地址`  链接默认使用内部iframe内嵌打开';
       return {
         placeholder,
       };
@@ -234,16 +232,12 @@ export const drawerSchema: FormSchemaGetter = () => [
     dependencies: {
       rules: (model) => {
         if (model.isFrame !== '0') {
-          return z
-            .string({ message: '请输入路由地址' })
-            .refine((val) => !val.startsWith('/'), {
-              message: '路由地址不需要带/',
-            });
+          return z.string({ message: '请输入路由地址' }).refine((val) => !val.startsWith('/'), {
+            message: '路由地址不需要带/',
+          });
         }
         // 为链接
-        return z
-          .string({ message: '请输入链接地址' })
-          .regex(/^https?:\/\//, { message: '请输入正确的链接地址' });
+        return z.string({ message: '请输入链接地址' }).regex(/^https?:\/\//, { message: '请输入正确的链接地址' });
       },
       // 类型不为按钮时显示
       show: (values) => values?.menuType !== 'F',

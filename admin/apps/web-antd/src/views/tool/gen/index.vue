@@ -1,27 +1,20 @@
 <script setup lang="ts">
+import type { VbenFormProps } from '@vben/common-ui';
 import type { Recordable } from '@vben/types';
+
+import type { VxeGridProps } from '#/adapter/vxe-table';
 
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { Page, useVbenModal, type VbenFormProps } from '@vben/common-ui';
+import { Page, useVbenModal } from '@vben/common-ui';
 import { getVxePopupContainer } from '@vben/utils';
 
 import { message, Modal, Popconfirm, Space } from 'ant-design-vue';
 import dayjs from 'dayjs';
 
-import {
-  vxeCheckboxChecked,
-  useVbenVxeGrid,
-  type VxeGridProps,
-} from '#/adapter/vxe-table';
-import {
-  batchGenCode,
-  generatedList,
-  genRemove,
-  getDataSourceNames,
-  syncDb,
-} from '#/api/tool/gen';
+import { useVbenVxeGrid, vxeCheckboxChecked } from '#/adapter/vxe-table';
+import { batchGenCode, generatedList, genRemove, getDataSourceNames, syncDb } from '#/api/tool/gen';
 import { downloadByData } from '#/utils/file/download';
 
 import codePreviewModal from './code-preview-modal.vue';
@@ -38,13 +31,7 @@ const formOptions: VbenFormProps = {
   },
   wrapperClass: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4',
   // 日期选择格式化
-  fieldMappingTime: [
-    [
-      'createTime',
-      ['params[beginTime]', 'params[endTime]'],
-      ['YYYY-MM-DD 00:00:00', 'YYYY-MM-DD 23:59:59'],
-    ],
-  ],
+  fieldMappingTime: [['createTime', ['params[beginTime]', 'params[endTime]'], ['YYYY-MM-DD 00:00:00', 'YYYY-MM-DD 23:59:59']]],
 };
 
 const gridOptions: VxeGridProps = {
@@ -196,46 +183,22 @@ function handleImport() {
     <BasicTable table-title="代码生成列表">
       <template #toolbar-tools>
         <Space>
-          <a-button
-            :disabled="!checked"
-            danger
-            type="primary"
-            v-access:code="['tool:gen:remove']"
-            @click="handleMultiDelete"
-          >
+          <a-button :disabled="!checked" danger type="primary" v-access:code="['tool:gen:remove']" @click="handleMultiDelete">
             {{ $t('pages.common.delete') }}
           </a-button>
-          <a-button
-            :disabled="!checked"
-            v-access:code="['tool:gen:code']"
-            @click="handleBatchGen"
-          >
+          <a-button :disabled="!checked" v-access:code="['tool:gen:code']" @click="handleBatchGen">
             {{ $t('pages.common.generate') }}
           </a-button>
-          <a-button
-            type="primary"
-            v-access:code="['tool:gen:import']"
-            @click="handleImport"
-          >
+          <a-button type="primary" v-access:code="['tool:gen:import']" @click="handleImport">
             {{ $t('pages.common.import') }}
           </a-button>
         </Space>
       </template>
       <template #action="{ row }">
-        <a-button
-          size="small"
-          type="link"
-          v-access:code="['tool:gen:preview']"
-          @click.stop="handlePreview(row)"
-        >
+        <a-button size="small" type="link" v-access:code="['tool:gen:preview']" @click.stop="handlePreview(row)">
           {{ $t('pages.common.preview') }}
         </a-button>
-        <a-button
-          size="small"
-          type="link"
-          v-access:code="['tool:gen:edit']"
-          @click.stop="handleEdit(row)"
-        >
+        <a-button size="small" type="link" v-access:code="['tool:gen:edit']" @click.stop="handleEdit(row)">
           {{ $t('pages.common.edit') }}
         </a-button>
         <Popconfirm
@@ -244,36 +207,18 @@ function handleImport() {
           placement="left"
           @confirm="handleSync(row)"
         >
-          <a-button
-            size="small"
-            type="link"
-            v-access:code="['tool:gen:edit']"
-            @click.stop=""
-          >
+          <a-button size="small" type="link" v-access:code="['tool:gen:edit']" @click.stop="">
             {{ $t('pages.common.sync') }}
           </a-button>
         </Popconfirm>
-        <a-button
-          size="small"
-          type="link"
-          v-access:code="['tool:gen:code']"
-          @click.stop="handleDownload(row)"
-        >
-          生成代码
-        </a-button>
+        <a-button size="small" type="link" v-access:code="['tool:gen:code']" @click.stop="handleDownload(row)"> 生成代码 </a-button>
         <Popconfirm
           :get-popup-container="getVxePopupContainer"
           :title="`确认删除[${row.tableName}]?`"
           placement="left"
           @confirm="handleDelete(row)"
         >
-          <a-button
-            danger
-            size="small"
-            type="link"
-            v-access:code="['tool:gen:remove']"
-            @click.stop=""
-          >
+          <a-button danger size="small" type="link" v-access:code="['tool:gen:remove']" @click.stop="">
             {{ $t('pages.common.delete') }}
           </a-button>
         </Popconfirm>
