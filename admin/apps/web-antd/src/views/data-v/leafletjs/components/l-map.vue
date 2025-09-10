@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/define-macros-order -->
 <!-- eslint-disable perfectionist/sort-imports -->
 <script setup lang="ts">
 // @ts-ignore
@@ -11,7 +12,12 @@ import 'heatmap.js';
 // @ts-ignore
 import HeatmapOverlay from 'leaflet-heatmap';
 
-import { gdMap, gdRoad, gdSatellite } from '../../mapConfig';
+import { gdMapList } from '../../mapConfig';
+
+const layers: any = {};
+gdMapList.forEach((item) => {
+  layers[item.title] = L.tileLayer(item.url, { subdomains: '0123456789', maxZoom: 18, minZoom: 3, attribution: '© 高德地图' });
+});
 
 defineOptions({
   name: 'LMap',
@@ -29,11 +35,7 @@ const props = withDefaults(
     id: `l-map-${Date.now()}`,
     center: () => [39.9042, 116.4074],
     zoom: 4,
-    mapOptions: () => ({
-      layers: [L.tileLayer(gdMap.url, gdMap.config)], // 默认高德标准地图
-      // zoomControl: false,
-      // attributionControl: false, // 去除右下角版权
-    }),
+    mapOptions: () => ({}),
     showLayers: true,
     showScale: true,
   },
@@ -53,19 +55,17 @@ onMounted(async () => {
 async function initMap() {
   // 创建地图实例
   // eslint-disable-next-line unicorn/no-array-callback-reference, unicorn/no-array-method-this-argument
-  mapRef.value = L.map(props.id, props.mapOptions).setView(props.center, props.zoom);
+  mapRef.value = L.map(props.id, {
+    layers: [layers['高德标准地图']],
+    // zoomControl: false,
+    // attributionControl: false, // 去除右下角版权
+    ...props.mapOptions,
+  }).setView(props.center, props.zoom);
   lRef.value = { ...L, HeatmapOverlay };
   await nextTick();
 
   // 添加图层控制器
-  props.showLayers &&
-    L.control
-      .layers({
-        标准地图: L.tileLayer(gdMap.url, gdMap.config),
-        卫星地图: L.tileLayer(gdSatellite.url, gdSatellite.config),
-        路网地图: L.tileLayer(gdRoad.url, gdRoad.config),
-      })
-      .addTo(mapRef.value);
+  props.showLayers && L.control.layers(layers).addTo(mapRef.value);
 
   // 添加比例尺
   props.showScale &&

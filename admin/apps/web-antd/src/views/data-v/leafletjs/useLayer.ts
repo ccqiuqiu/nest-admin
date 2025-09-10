@@ -1,6 +1,6 @@
 import { debounce } from 'lodash-es';
 
-import { calculateMinMax, grib2heatmap, heightToPressure } from '../utils';
+import { calculateMinMax, grib2heatmap, heightToPressure } from './utils';
 
 export default function useLayer({ mapRef, mapMovingRef, heightRef, lRef }: any): any {
   const showLayerRef = ref({
